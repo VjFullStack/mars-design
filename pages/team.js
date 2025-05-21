@@ -62,7 +62,7 @@ const teamMembers = [
     id: 5,
     name: 'Olivia Martinez',
     role: 'Interior Designer',
-    bio: 'Olivia's designs are characterized by her bold use of color and ability to blend different design styles. She excels at creating spaces that reflect her clients' personalities and lifestyles.',
+    bio: 'Olivia\'s designs are characterized by her bold use of color and ability to blend different design styles. She excels at creating spaces that reflect her clients\' personalities and lifestyles.',
     image: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
     social: {
       linkedin: 'https://linkedin.com/',
@@ -173,14 +173,14 @@ export default function Team() {
                       href={member.social.linkedin} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-gray-600 transition-colors hover:text-primary"
-                      aria-label={`${member.name}'s LinkedIn`}
+                      aria-label={member.name + "'s LinkedIn"}
+                      className="p-2 text-gray-600 transition-colors hover:text-secondary"
                     >
                       <FiLinkedin className="w-5 h-5" />
                     </a>
                     <a 
                       href={`mailto:${member.social.email}`}
-                      className="text-gray-600 transition-colors hover:text-primary"
+                      className="p-2 text-gray-600 transition-colors hover:text-secondary"
                       aria-label={`Email ${member.name}`}
                     >
                       <FiMail className="w-5 h-5" />
@@ -189,8 +189,8 @@ export default function Team() {
                       href={member.social.instagram}
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-gray-600 transition-colors hover:text-primary"
-                      aria-label={`${member.name}'s Instagram`}
+                      aria-label={member.name + "'s Instagram"}
+                      className="p-2 text-gray-600 transition-colors hover:text-secondary"
                     >
                       <FiInstagram className="w-5 h-5" />
                     </a>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MARS Interior Design Website
 
 A modern, responsive website for MARS Interior Design company showcasing their projects, team, and services.
@@ -62,3 +63,6 @@ npm run start
 ```
 
 Or connect your GitHub repository to Vercel for automatic deployments.
+=======
+# mars-design
+>>>>>>> 385252b1d74e4c4bbdb737241df69412a8dbcb10

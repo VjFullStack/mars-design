@@ -13,7 +13,7 @@ const jobOpenings = [
     type: 'Full-time',
     description: 'We are seeking an experienced Senior Interior Designer to join our team. The ideal candidate will have a strong portfolio demonstrating expertise in residential and/or commercial design, excellent communication skills, and the ability to lead projects from concept to completion.',
     requirements: [
-      'Bachelor's degree in Interior Design or related field',
+      'Bachelor\'s degree in Interior Design or related field',
       'Minimum 5 years of professional interior design experience',
       'Proficiency in AutoCAD, SketchUp, and Adobe Creative Suite',
       'Strong portfolio demonstrating diverse design capabilities',
@@ -36,7 +36,7 @@ const jobOpenings = [
     type: 'Full-time',
     description: 'We are looking for a talented Junior Interior Designer to support our design team. This role is perfect for a detail-oriented individual with a passion for interior design and a desire to grow in a collaborative environment.',
     requirements: [
-      'Bachelor's degree in Interior Design or related field',
+      'Bachelor\'s degree in Interior Design or related field',
       '1-3 years of professional interior design experience',
       'Proficiency in AutoCAD and Adobe Creative Suite',
       'Strong visual communication skills',
@@ -59,7 +59,7 @@ const jobOpenings = [
     type: 'Full-time',
     description: 'We are seeking a detail-oriented Design Project Manager to oversee the execution of our design projects. The ideal candidate will have experience in both interior design and project management, with excellent organizational and communication skills.',
     requirements: [
-      'Bachelor's degree in Interior Design, Architecture, or related field',
+      'Bachelor\'s degree in Interior Design, Architecture, or related field',
       'Minimum 3-5 years of project management experience in design or construction',
       'Strong understanding of design processes and construction methods',
       'Excellent organizational, time management, and communication skills',
@@ -178,7 +178,7 @@ export default function Careers() {
             <div>
               <h2 className="mb-6 text-3xl font-bold">Why Work With Us</h2>
               <p className="mb-6 text-lg">
-                At MARS Interior Design, we foster a collaborative, inclusive environment where creativity flourishes and professional growth is encouraged. We believe that our team's diverse perspectives and talents are key to our success.
+                At MARS Interior Design, we foster a collaborative, inclusive environment where creativity flourishes and professional growth is encouraged. We believe that our team\'s diverse perspectives and talents are key to our success.
               </p>
               <ul className="space-y-3">
                 {[
@@ -281,7 +281,7 @@ export default function Careers() {
               <FiCheckCircle className="w-16 h-16 mx-auto mb-4 text-secondary" />
               <h3 className="mb-2 text-2xl font-bold">Application Submitted!</h3>
               <p className="text-lg">
-                Thank you for your interest in joining our team. We'll review your application and contact you if there's a good match.
+                Thank you for your interest in joining our team. We\'ll review your application and contact you if there\'s a good match.
               </p>
             </motion.div>
           ) : (

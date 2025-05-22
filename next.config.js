@@ -2,7 +2,20 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['images.unsplash.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.ctfassets.net',  // Contentful assets domain
+      },
+      {
+        protocol: 'https',
+        hostname: 'downloads.ctfassets.net', // Contentful downloads domain
+      },
+    ],
   },
 }
 

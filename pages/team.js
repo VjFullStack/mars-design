@@ -3,90 +3,11 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FiLinkedin, FiMail, FiInstagram } from 'react-icons/fi'
+import { getTeamMembers } from '../lib/contentful'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
-// Sample team member data
-const teamMembers = [
-  {
-    id: 1,
-    name: 'Sophia Reynolds',
-    role: 'Founder & Principal Designer',
-    bio: 'With over 15 years of experience in interior design, Sophia founded MARS Design with a vision to create spaces that inspire and elevate everyday living. Her work has been featured in Architectural Digest and Elle Decor.',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-    social: {
-      linkedin: 'https://linkedin.com/',
-      email: 'sophia@marsdesign.com',
-      instagram: 'https://instagram.com/',
-    },
-    specialties: ['Residential Design', 'Space Planning', 'Custom Furniture Design'],
-  },
-  {
-    id: 2,
-    name: 'Michael Chen',
-    role: 'Senior Interior Designer',
-    bio: 'Michael brings a unique perspective to each project, combining his background in architecture with a passion for innovative materials and sustainable design practices.',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-    social: {
-      linkedin: 'https://linkedin.com/',
-      email: 'michael@marsdesign.com',
-      instagram: 'https://instagram.com/',
-    },
-    specialties: ['Commercial Design', 'Sustainable Interiors', 'Lighting Design'],
-  },
-  {
-    id: 3,
-    name: 'Emma Davis',
-    role: 'Interior Designer',
-    bio: 'Emma specializes in creating warm, inviting residential spaces that perfectly balance aesthetics and functionality. Her attention to detail and client-focused approach ensure exceptional results.',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-    social: {
-      linkedin: 'https://linkedin.com/',
-      email: 'emma@marsdesign.com',
-      instagram: 'https://instagram.com/',
-    },
-    specialties: ['Residential Design', 'Color Theory', 'Textile Selection'],
-  },
-  {
-    id: 4,
-    name: 'James Wilson',
-    role: 'Project Manager',
-    bio: 'James ensures that every project runs smoothly from concept to completion. With his background in construction and design, he bridges the gap between creative vision and practical execution.',
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-    social: {
-      linkedin: 'https://linkedin.com/',
-      email: 'james@marsdesign.com',
-      instagram: 'https://instagram.com/',
-    },
-    specialties: ['Project Coordination', 'Budget Management', 'Vendor Relations'],
-  },
-  {
-    id: 5,
-    name: 'Olivia Martinez',
-    role: 'Interior Designer',
-    bio: 'Olivia\'s designs are characterized by her bold use of color and ability to blend different design styles. She excels at creating spaces that reflect her clients\' personalities and lifestyles.',
-    image: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-    social: {
-      linkedin: 'https://linkedin.com/',
-      email: 'olivia@marsdesign.com',
-      instagram: 'https://instagram.com/',
-    },
-    specialties: ['Residential Design', 'Eclectic Interiors', 'Art Curation'],
-  },
-  {
-    id: 6,
-    name: 'David Kim',
-    role: 'Commercial Design Specialist',
-    bio: 'David focuses on creating productive and inspiring workspaces. His designs blend functionality with aesthetic appeal, resulting in environments that enhance productivity and employee satisfaction.',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-    social: {
-      linkedin: 'https://linkedin.com/',
-      email: 'david@marsdesign.com',
-      instagram: 'https://instagram.com/',
-    },
-    specialties: ['Office Design', 'Hospitality Interiors', 'Ergonomic Workspaces'],
-  },
-]
 
-export default function Team() {
+export default function Team({ teamMembers }) {
   return (
     <>
       <Head>
@@ -146,54 +67,75 @@ export default function Team() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="relative h-80">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    layout="fill"
-                    objectFit="cover"
-                  />
+                <div className="relative h-80 w-full overflow-hidden bg-gray-50 flex items-center justify-center p-2">
+                  <div className="w-full h-full relative flex items-center justify-center">
+                    <Image
+                      src={member.image || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'}
+                      alt={member.name}
+                      width={400}
+                      height={500}
+                      priority
+                      className="max-w-full max-h-full object-contain" 
+                    />
+                  </div>
                 </div>
                 <div className="p-6">
                   <h3 className="mb-1 text-xl font-bold">{member.name}</h3>
                   <p className="mb-4 text-secondary">{member.role}</p>
-                  <p className="mb-4 text-gray-700">{member.bio}</p>
-                  
-                  <h4 className="mt-4 mb-2 font-semibold">Specialties:</h4>
-                  <div className="flex flex-wrap mb-4 gap-2">
-                    {member.specialties.map((specialty, idx) => (
-                      <span key={idx} className="px-3 py-1 text-sm text-primary bg-gray-100 rounded-full">
-                        {specialty}
-                      </span>
-                    ))}
+                  <div className="mb-4 text-gray-700">
+                    {typeof member.bio === 'string' 
+                      ? member.bio 
+                      : member.bio && documentToReactComponents(member.bio)}
                   </div>
                   
+                  {member.specialties && member.specialties.length > 0 && (
+                    <>
+                      <h4 className="mt-6 mb-2 font-bold">Specialties</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {member.specialties.map((specialty, index) => (
+                          <span
+                            key={index}
+                            className="px-3 py-1 text-sm text-secondary bg-secondary bg-opacity-10 rounded-full"
+                          >
+                            {specialty}
+                          </span>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                  
                   <div className="flex mt-6 space-x-4">
-                    <a 
-                      href={member.social.linkedin} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      aria-label={member.name + "'s LinkedIn"}
-                      className="p-2 text-gray-600 transition-colors hover:text-secondary"
-                    >
-                      <FiLinkedin className="w-5 h-5" />
-                    </a>
-                    <a 
-                      href={`mailto:${member.social.email}`}
-                      className="p-2 text-gray-600 transition-colors hover:text-secondary"
-                      aria-label={`Email ${member.name}`}
-                    >
-                      <FiMail className="w-5 h-5" />
-                    </a>
-                    <a 
-                      href={member.social.instagram}
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      aria-label={member.name + "'s Instagram"}
-                      className="p-2 text-gray-600 transition-colors hover:text-secondary"
-                    >
-                      <FiInstagram className="w-5 h-5" />
-                    </a>
+                    {member.social?.linkedin && (
+                      <a 
+                        href={member.social.linkedin} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        aria-label={member.name + "'s LinkedIn"}
+                        className="p-2 text-gray-600 transition-colors hover:text-secondary"
+                      >
+                        <FiLinkedin className="w-5 h-5" />
+                      </a>
+                    )}
+                    {member.social?.email && (
+                      <a 
+                        href={`mailto:${member.social.email}`}
+                        className="p-2 text-gray-600 transition-colors hover:text-secondary"
+                        aria-label={`Email ${member.name}`}
+                      >
+                        <FiMail className="w-5 h-5" />
+                      </a>
+                    )}
+                    {member.social?.instagram && (
+                      <a 
+                        href={member.social.instagram}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        aria-label={member.name + "'s Instagram"}
+                        className="p-2 text-gray-600 transition-colors hover:text-secondary"
+                      >
+                        <FiInstagram className="w-5 h-5" />
+                      </a>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -220,4 +162,16 @@ export default function Team() {
       </section>
     </>
   )
+}
+
+export async function getStaticProps() {
+  const teamMembers = await getTeamMembers();
+  
+  return {
+    props: {
+      teamMembers,
+    },
+    // Re-generate at most once per hour
+    revalidate: 3600,
+  };
 }

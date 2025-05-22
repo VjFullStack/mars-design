@@ -3,83 +3,14 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FiCheckCircle, FiDownload } from 'react-icons/fi'
+import { getJobOpenings } from '../lib/contentful'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
-// Sample job openings data
-const jobOpenings = [
-  {
-    id: 1,
-    title: 'Senior Interior Designer',
-    location: 'New York, NY',
-    type: 'Full-time',
-    description: 'We are seeking an experienced Senior Interior Designer to join our team. The ideal candidate will have a strong portfolio demonstrating expertise in residential and/or commercial design, excellent communication skills, and the ability to lead projects from concept to completion.',
-    requirements: [
-      'Bachelor\'s degree in Interior Design or related field',
-      'Minimum 5 years of professional interior design experience',
-      'Proficiency in AutoCAD, SketchUp, and Adobe Creative Suite',
-      'Strong portfolio demonstrating diverse design capabilities',
-      'Excellent client communication and presentation skills',
-      'Knowledge of materials, finishes, furniture, and construction methods',
-    ],
-    benefits: [
-      'Competitive salary',
-      'Health, dental, and vision insurance',
-      'Retirement plan with company match',
-      'Generous paid time off',
-      'Professional development opportunities',
-      'Creative and collaborative work environment',
-    ],
-  },
-  {
-    id: 2,
-    title: 'Junior Interior Designer',
-    location: 'New York, NY',
-    type: 'Full-time',
-    description: 'We are looking for a talented Junior Interior Designer to support our design team. This role is perfect for a detail-oriented individual with a passion for interior design and a desire to grow in a collaborative environment.',
-    requirements: [
-      'Bachelor\'s degree in Interior Design or related field',
-      '1-3 years of professional interior design experience',
-      'Proficiency in AutoCAD and Adobe Creative Suite',
-      'Strong visual communication skills',
-      'Knowledge of materials, finishes, and furniture',
-      'Ability to work in a fast-paced environment',
-    ],
-    benefits: [
-      'Competitive salary',
-      'Health, dental, and vision insurance',
-      'Retirement plan with company match',
-      'Generous paid time off',
-      'Mentorship opportunities',
-      'Creative and collaborative work environment',
-    ],
-  },
-  {
-    id: 3,
-    title: 'Design Project Manager',
-    location: 'Remote (with occasional travel)',
-    type: 'Full-time',
-    description: 'We are seeking a detail-oriented Design Project Manager to oversee the execution of our design projects. The ideal candidate will have experience in both interior design and project management, with excellent organizational and communication skills.',
-    requirements: [
-      'Bachelor\'s degree in Interior Design, Architecture, or related field',
-      'Minimum 3-5 years of project management experience in design or construction',
-      'Strong understanding of design processes and construction methods',
-      'Excellent organizational, time management, and communication skills',
-      'Experience with budgeting and resource allocation',
-      'Proficiency in project management software',
-    ],
-    benefits: [
-      'Competitive salary',
-      'Health, dental, and vision insurance',
-      'Retirement plan with company match',
-      'Flexible remote work arrangement',
-      'Professional development opportunities',
-      'Travel reimbursement for project visits',
-    ],
-  },
-]
-
-export default function Careers() {
+export default function Careers({ jobOpenings }) {
   const [selectedJob, setSelectedJob] = useState(null)
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -122,28 +53,39 @@ export default function Careers() {
     }
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // In a real application, you would handle the form submission
-    // and file upload to your backend here
-    console.log('Form submitted:', formData)
-    setFormSubmitted(true)
-    
-    // Reset form after submission
-    setTimeout(() => {
-      setFormSubmitted(false)
-      setFormData({
-        fullName: '',
-        email: '',
-        phone: '',
-        position: '',
-        portfolio: '',
-        resume: null,
-        message: '',
-      })
-      setSelectedJob(null)
-    }, 5000)
-  }
+  // Handle form reset after submission (when returning from FormSubmit)
+  React.useEffect(() => {
+    // Check if we're in the browser environment
+    if (typeof window !== 'undefined') {
+      // Check if the URL has a 'submitted' parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('submitted')) {
+        setFormSubmitted(true);
+        
+        // Reset form
+        setFormData({
+          fullName: '',
+          email: '',
+          phone: '',
+          position: '',
+          portfolio: '',
+          resume: null,
+          message: '',
+        });
+        
+        // Clear selected job
+        setSelectedJob(null);
+        
+        // Remove the parameter from URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          setFormSubmitted(false);
+        }, 5000);
+      }
+    }
+  }, []);
 
   return (
     <>
@@ -166,12 +108,13 @@ export default function Careers() {
       <section className="py-16 bg-light">
         <div className="container">
           <div className="grid items-center grid-cols-1 gap-12 md:grid-cols-2">
-            <div className="relative h-80 md:h-auto">
+            <div className="relative h-80 md:h-auto w-full overflow-hidden rounded-lg">
               <Image
                 src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
                 alt="Team working together"
-                layout="fill"
-                objectFit="cover"
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="rounded-lg"
               />
             </div>
@@ -218,7 +161,11 @@ export default function Careers() {
                       </span>
                     </div>
                   </div>
-                  <p className="mb-4 text-gray-700">{job.description}</p>
+                  <div className="mb-4 text-gray-700">
+                    {typeof job.description === 'string' 
+                      ? job.description 
+                      : job.description && documentToReactComponents(job.description)}
+                  </div>
                   
                   <button
                     className="text-primary hover:text-secondary"
@@ -285,7 +232,12 @@ export default function Careers() {
               </p>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="p-6 bg-white rounded-lg shadow-md">
+            <form action="https://formsubmit.co/marsturnkeyandinteriors@gmail.com" method="POST" enctype="multipart/form-data" className="p-6 bg-white rounded-lg shadow-md">
+              {/* FormSubmit configuration */}
+              <input type="hidden" name="_next" value="http://localhost:3005/careers?submitted=true" />
+              <input type="hidden" name="_subject" value="New Job Application" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {/* Full Name */}
                 <div className="col-span-1">
@@ -382,7 +334,7 @@ export default function Careers() {
                     <input
                       type="file"
                       id="resume"
-                      name="resume"
+                      name="attachment"
                       className="hidden"
                       onChange={handleFileChange}
                       accept=".pdf,.doc,.docx"
@@ -451,4 +403,16 @@ export default function Careers() {
       </section>
     </>
   )
+}
+
+export async function getStaticProps() {
+  const jobOpenings = await getJobOpenings();
+  
+  return {
+    props: {
+      jobOpenings,
+    },
+    // Re-generate at most once per hour
+    revalidate: 3600,
+  };
 }

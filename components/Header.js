@@ -44,7 +44,7 @@ const Header = () => {
   return (
     <header 
       className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white shadow-md py-2' : 'bg-white bg-opacity-80 backdrop-blur-sm py-4'
+        scrolled ? 'bg-white shadow-md py-2' : isOpen ? 'bg-white py-4' : 'bg-white bg-opacity-80 backdrop-blur-sm py-4'
       }`}
     >
       <div className="container flex items-center justify-between">
@@ -88,7 +88,8 @@ const Header = () => {
         {/* Mobile Menu */}
         {isOpen && (
           <motion.div 
-            className="fixed inset-0 bg-white md:hidden"
+            className="fixed inset-0 bg-white md:hidden z-40"
+            style={{ backdropFilter: 'none' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -99,8 +100,9 @@ const Header = () => {
                   <li key={link.href}>
                     <Link href={link.href} legacyBehavior>
                       <a 
-                        className="text-xl font-medium text-primary hover:text-secondary"
+                        className="text-xl font-medium text-primary hover:text-secondary font-display"
                         onClick={closeMenu}
+                        style={{ textShadow: 'none', transform: 'translateZ(0)' }}
                       >
                         {link.label}
                       </a>

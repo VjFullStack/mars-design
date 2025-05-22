@@ -12,6 +12,8 @@ export default function Contact() {
     message: '',
   })
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -21,24 +23,34 @@ export default function Contact() {
     })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // In a real application, you would handle form submission to your backend here
-    console.log('Form submitted:', formData)
-    setFormSubmitted(true)
-    
-    // Reset form after submission
-    setTimeout(() => {
-      setFormSubmitted(false)
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: '',
-      })
-    }, 5000)
-  }
+  // Handle form reset after submission (when returning from FormSubmit)
+  React.useEffect(() => {
+    // Check if we're in the browser environment
+    if (typeof window !== 'undefined') {
+      // Check if the URL has a 'submitted' parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('submitted')) {
+        setFormSubmitted(true);
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: '',
+        });
+        
+        // Remove the parameter from URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          setFormSubmitted(false);
+        }, 5000);
+      }
+    }
+  }, []);
 
   return (
     <>
@@ -126,7 +138,12 @@ export default function Contact() {
               ) : (
                 <div className="p-8 bg-white rounded-lg shadow-md">
                   <h2 className="mb-6 text-2xl font-bold">Send Us a Message</h2>
-                  <form onSubmit={handleSubmit}>
+                  <form action="https://formsubmit.co/marsturnkeyandinteriors@gmail.com" method="POST" className="space-y-6">
+                    {/* FormSubmit configuration */}
+                    <input type="hidden" name="_next" value="http://localhost:3005/contact?submitted=true" />
+                    <input type="hidden" name="_subject" value="New Contact Form Submission" />
+                    <input type="hidden" name="_template" value="table" />
+                    <input type="hidden" name="_captcha" value="false" />
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                       <div className="col-span-1">
                         <label htmlFor="name" className="block mb-2 font-medium">

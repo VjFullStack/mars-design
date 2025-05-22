@@ -3,87 +3,13 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FiSearch } from 'react-icons/fi'
-
-// Sample project data
-const projects = [
-  {
-    id: 1,
-    title: 'Modern Apartment Redesign',
-    category: 'Residential',
-    location: 'New York, NY',
-    year: 2023,
-    description: 'A complete renovation of a 2,200 sq ft apartment with an open concept design, custom furniture, and smart home integration.',
-    image: 'https://images.unsplash.com/photo-1600210492493-0946911123ea?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 2,
-    title: 'Luxury Villa Interior',
-    category: 'Residential',
-    location: 'Los Angeles, CA',
-    year: 2022,
-    description: 'Interior design for a newly constructed luxury villa featuring high-end finishes, custom cabinetry, and indoor-outdoor living spaces.',
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 3,
-    title: 'Corporate Office Space',
-    category: 'Commercial',
-    location: 'Chicago, IL',
-    year: 2023,
-    description: 'A modern workplace design for a tech company emphasizing collaboration, flexibility, and employee well-being.',
-    image: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 4,
-    title: 'Boutique Hotel Lobby',
-    category: 'Hospitality',
-    location: 'Miami, FL',
-    year: 2021,
-    description: 'Redesign of a boutique hotel lobby featuring custom lighting, sustainable materials, and an immersive guest experience.',
-    image: 'https://images.unsplash.com/photo-1590073242678-70ee3fc28f17?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 5,
-    title: 'Minimalist Home',
-    category: 'Residential',
-    location: 'Seattle, WA',
-    year: 2022,
-    description: 'A minimalist residential design focusing on essential elements, natural light, and a harmonious color palette.',
-    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 6,
-    title: 'Upscale Restaurant',
-    category: 'Hospitality',
-    location: 'San Francisco, CA',
-    year: 2021,
-    description: 'Interior design for an upscale dining establishment featuring custom furniture, atmospheric lighting, and a sophisticated ambiance.',
-    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 7,
-    title: 'Urban Loft Conversion',
-    category: 'Residential',
-    location: 'Boston, MA',
-    year: 2023,
-    description: 'Transformation of an industrial loft into a luxury living space with exposed brick, high ceilings, and contemporary furnishings.',
-    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 8,
-    title: 'Medical Office Design',
-    category: 'Commercial',
-    location: 'Denver, CO',
-    year: 2022,
-    description: 'A healing-centered design for a medical practice that balances professionalism with patient comfort and wellness.',
-    image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-  },
-]
+import { getProjects } from '../lib/contentful'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 // Available category filters
 const categories = ['All', 'Residential', 'Commercial', 'Hospitality']
 
-export default function Projects() {
+export default function Projects({ projects }) {
   const [filter, setFilter] = useState('All')
   const [searchTerm, setSearchTerm] = useState('')
 
@@ -162,12 +88,13 @@ export default function Projects() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <div className="relative h-64">
+                  <div className="relative h-64 w-full overflow-hidden">
                     <Image
-                      src={project.image}
+                      src={project.image || 'https://images.unsplash.com/photo-1600210492493-0946911123ea?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'}
                       alt={project.title}
-                      layout="fill"
-                      objectFit="cover"
+                      fill
+                      style={{ objectFit: 'cover' }}
+                      sizes="(max-width: 768px) 100vw, 33vw"
                     />
                   </div>
                   <div className="p-6">
@@ -179,7 +106,11 @@ export default function Projects() {
                     </div>
                     <h3 className="mb-2 text-xl font-bold">{project.title}</h3>
                     <p className="mb-3 text-gray-600">{project.location}</p>
-                    <p className="mb-4 text-gray-700">{project.description}</p>
+                    <div className="mb-4 text-gray-700">
+                      {typeof project.description === 'string'
+                        ? project.description
+                        : project.description && documentToReactComponents(project.description)}
+                    </div>
                     <button className="text-primary hover:text-secondary">View Details</button>
                   </div>
                 </motion.div>
@@ -211,4 +142,16 @@ export default function Projects() {
       </section>
     </>
   )
+}
+
+export async function getStaticProps() {
+  const projects = await getProjects();
+  
+  return {
+    props: {
+      projects,
+    },
+    // Re-generate at most once per hour
+    revalidate: 3600,
+  };
 }

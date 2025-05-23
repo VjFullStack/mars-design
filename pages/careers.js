@@ -330,7 +330,7 @@ export default function Careers({ jobOpenings }) {
                   <label htmlFor="resume" className="block mb-2 font-medium">
                     Resume/CV *
                   </label>
-                  <div className="flex items-center w-full px-4 py-2 border rounded-md h-12">
+                  <div className="flex items-center w-full px-4 py-2 border rounded-md file-input-wrapper">
                     <input
                       type="file"
                       id="resume"

@@ -234,7 +234,7 @@ export default function Careers({ jobOpenings }) {
           ) : (
             <form action="https://formsubmit.co/marsturnkeyandinteriors@gmail.com" method="POST" enctype="multipart/form-data" className="p-6 bg-white rounded-lg shadow-md">
               {/* FormSubmit configuration */}
-              <input type="hidden" name="_next" value="http://localhost:3005/careers?submitted=true" />
+              <input type="hidden" name="_next" value="/careers?submitted=true" />
               <input type="hidden" name="_subject" value="New Job Application" />
               <input type="hidden" name="_template" value="table" />
               <input type="hidden" name="_captcha" value="false" />

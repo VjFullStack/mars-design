@@ -140,7 +140,7 @@ export default function Contact() {
                   <h2 className="mb-6 text-2xl font-bold">Send Us a Message</h2>
                   <form action="https://formsubmit.co/marsturnkeyandinteriors@gmail.com" method="POST" className="space-y-6">
                     {/* FormSubmit configuration */}
-                    <input type="hidden" name="_next" value="http://localhost:3005/contact?submitted=true" />
+                    <input type="hidden" name="_next" value="/contact?submitted=true" />
                     <input type="hidden" name="_subject" value="New Contact Form Submission" />
                     <input type="hidden" name="_template" value="table" />
                     <input type="hidden" name="_captcha" value="false" />

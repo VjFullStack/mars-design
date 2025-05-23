@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/mobile-fixes.css'
 import Layout from '../components/Layout'
 import { AnimatePresence } from 'framer-motion'
 

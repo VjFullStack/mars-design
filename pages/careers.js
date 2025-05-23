@@ -250,7 +250,7 @@ export default function Careers({ jobOpenings }) {
                     name="fullName"
                     value={formData.fullName}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border rounded-md"
+                    className="w-full px-4 py-2 border rounded-md h-12 text-base"
                     required
                   />
                 </div>
@@ -266,7 +266,7 @@ export default function Careers({ jobOpenings }) {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border rounded-md"
+                    className="w-full px-4 py-2 border rounded-md h-12 text-base"
                     required
                   />
                 </div>
@@ -282,7 +282,7 @@ export default function Careers({ jobOpenings }) {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border rounded-md"
+                    className="w-full px-4 py-2 border rounded-md h-12 text-base"
                   />
                 </div>
                 
@@ -296,7 +296,7 @@ export default function Careers({ jobOpenings }) {
                     name="position"
                     value={formData.position}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border rounded-md"
+                    className="w-full px-4 py-2 border rounded-md h-12 text-base appearance-none"
                     required
                   >
                     <option value="">Select a position</option>
@@ -320,7 +320,7 @@ export default function Careers({ jobOpenings }) {
                     name="portfolio"
                     value={formData.portfolio}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border rounded-md"
+                    className="w-full px-4 py-2 border rounded-md h-12 text-base"
                     placeholder="https://your-portfolio.com"
                   />
                 </div>
@@ -330,7 +330,7 @@ export default function Careers({ jobOpenings }) {
                   <label htmlFor="resume" className="block mb-2 font-medium">
                     Resume/CV *
                   </label>
-                  <div className="flex items-center w-full px-4 py-2 border rounded-md">
+                  <div className="flex items-center w-full px-4 py-2 border rounded-md h-12">
                     <input
                       type="file"
                       id="resume"
@@ -361,7 +361,7 @@ export default function Careers({ jobOpenings }) {
                     value={formData.message}
                     onChange={handleInputChange}
                     rows="5"
-                    className="w-full px-4 py-2 border rounded-md"
+                    className="w-full px-4 py-2 border rounded-md text-base"
                   ></textarea>
                 </div>
                 

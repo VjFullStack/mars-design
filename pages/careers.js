@@ -238,9 +238,9 @@ export default function Careers({ jobOpenings }) {
               <input type="hidden" name="_subject" value="New Job Application" />
               <input type="hidden" name="_template" value="table" />
               <input type="hidden" name="_captcha" value="false" />
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="flex flex-col gap-5">
                 {/* Full Name */}
-                <div className="col-span-1">
+                <div className="w-full">
                   <label htmlFor="fullName" className="block mb-2 font-medium">
                     Full Name *
                   </label>
@@ -250,13 +250,13 @@ export default function Careers({ jobOpenings }) {
                     name="fullName"
                     value={formData.fullName}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border rounded-md"
+                    className="w-full px-4 py-2 border rounded-md h-12 text-base"
                     required
                   />
                 </div>
                 
                 {/* Email */}
-                <div className="col-span-1">
+                <div className="w-full">
                   <label htmlFor="email" className="block mb-2 font-medium">
                     Email *
                   </label>
@@ -266,13 +266,13 @@ export default function Careers({ jobOpenings }) {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border rounded-md"
+                    className="w-full px-4 py-2 border rounded-md h-12 text-base"
                     required
                   />
                 </div>
                 
                 {/* Phone */}
-                <div className="col-span-1">
+                <div className="w-full">
                   <label htmlFor="phone" className="block mb-2 font-medium">
                     Phone
                   </label>
@@ -282,12 +282,12 @@ export default function Careers({ jobOpenings }) {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border rounded-md"
+                    className="w-full px-4 py-2 border rounded-md h-12 text-base"
                   />
                 </div>
                 
                 {/* Position */}
-                <div className="col-span-1">
+                <div className="w-full">
                   <label htmlFor="position" className="block mb-2 font-medium">
                     Position *
                   </label>
@@ -296,7 +296,7 @@ export default function Careers({ jobOpenings }) {
                     name="position"
                     value={formData.position}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border rounded-md"
+                    className="w-full px-4 py-2 border rounded-md h-12 text-base appearance-none"
                     required
                   >
                     <option value="">Select a position</option>
@@ -310,7 +310,7 @@ export default function Careers({ jobOpenings }) {
                 </div>
                 
                 {/* Portfolio URL */}
-                <div className="col-span-1">
+                <div className="w-full">
                   <label htmlFor="portfolio" className="block mb-2 font-medium">
                     Portfolio URL
                   </label>
@@ -320,17 +320,17 @@ export default function Careers({ jobOpenings }) {
                     name="portfolio"
                     value={formData.portfolio}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border rounded-md"
+                    className="w-full px-4 py-2 border rounded-md h-12 text-base"
                     placeholder="https://your-portfolio.com"
                   />
                 </div>
                 
                 {/* Resume */}
-                <div className="col-span-1">
+                <div className="w-full">
                   <label htmlFor="resume" className="block mb-2 font-medium">
                     Resume/CV *
                   </label>
-                  <div className="flex items-center w-full px-4 py-2 border rounded-md">
+                  <div className="flex items-center w-full px-4 py-2 border rounded-md file-input-wrapper">
                     <input
                       type="file"
                       id="resume"
@@ -351,7 +351,7 @@ export default function Careers({ jobOpenings }) {
                 </div>
                 
                 {/* Message */}
-                <div className="col-span-2">
+                <div className="w-full">
                   <label htmlFor="message" className="block mb-2 font-medium">
                     Cover Letter/Additional Information
                   </label>
@@ -361,11 +361,11 @@ export default function Careers({ jobOpenings }) {
                     value={formData.message}
                     onChange={handleInputChange}
                     rows="5"
-                    className="w-full px-4 py-2 border rounded-md"
+                    className="w-full px-4 py-2 border rounded-md text-base"
                   ></textarea>
                 </div>
                 
-                <div className="col-span-2">
+                <div className="w-full">
                   <button
                     type="submit"
                     className="px-6 py-3 text-white transition-colors rounded-md bg-primary hover:bg-primary-light"

@@ -238,9 +238,9 @@ export default function Careers({ jobOpenings }) {
               <input type="hidden" name="_subject" value="New Job Application" />
               <input type="hidden" name="_template" value="table" />
               <input type="hidden" name="_captcha" value="false" />
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="flex flex-col gap-5">
                 {/* Full Name */}
-                <div className="col-span-1">
+                <div className="w-full">
                   <label htmlFor="fullName" className="block mb-2 font-medium">
                     Full Name *
                   </label>
@@ -256,7 +256,7 @@ export default function Careers({ jobOpenings }) {
                 </div>
                 
                 {/* Email */}
-                <div className="col-span-1">
+                <div className="w-full">
                   <label htmlFor="email" className="block mb-2 font-medium">
                     Email *
                   </label>
@@ -272,7 +272,7 @@ export default function Careers({ jobOpenings }) {
                 </div>
                 
                 {/* Phone */}
-                <div className="col-span-1">
+                <div className="w-full">
                   <label htmlFor="phone" className="block mb-2 font-medium">
                     Phone
                   </label>
@@ -287,7 +287,7 @@ export default function Careers({ jobOpenings }) {
                 </div>
                 
                 {/* Position */}
-                <div className="col-span-1">
+                <div className="w-full">
                   <label htmlFor="position" className="block mb-2 font-medium">
                     Position *
                   </label>
@@ -310,7 +310,7 @@ export default function Careers({ jobOpenings }) {
                 </div>
                 
                 {/* Portfolio URL */}
-                <div className="col-span-1">
+                <div className="w-full">
                   <label htmlFor="portfolio" className="block mb-2 font-medium">
                     Portfolio URL
                   </label>
@@ -326,7 +326,7 @@ export default function Careers({ jobOpenings }) {
                 </div>
                 
                 {/* Resume */}
-                <div className="col-span-1">
+                <div className="w-full">
                   <label htmlFor="resume" className="block mb-2 font-medium">
                     Resume/CV *
                   </label>
@@ -351,7 +351,7 @@ export default function Careers({ jobOpenings }) {
                 </div>
                 
                 {/* Message */}
-                <div className="col-span-2">
+                <div className="w-full">
                   <label htmlFor="message" className="block mb-2 font-medium">
                     Cover Letter/Additional Information
                   </label>
@@ -365,7 +365,7 @@ export default function Careers({ jobOpenings }) {
                   ></textarea>
                 </div>
                 
-                <div className="col-span-2">
+                <div className="w-full">
                   <button
                     type="submit"
                     className="px-6 py-3 text-white transition-colors rounded-md bg-primary hover:bg-primary-light"

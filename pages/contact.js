@@ -144,8 +144,8 @@ export default function Contact() {
                     <input type="hidden" name="_subject" value="New Contact Form Submission" />
                     <input type="hidden" name="_template" value="table" />
                     <input type="hidden" name="_captcha" value="false" />
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                      <div className="col-span-1">
+                    <div className="flex flex-col gap-5">
+                      <div className="w-full">
                         <label htmlFor="name" className="block mb-2 font-medium">
                           Your Name *
                         </label>
@@ -160,7 +160,7 @@ export default function Contact() {
                         />
                       </div>
                       
-                      <div className="col-span-1">
+                      <div className="w-full">
                         <label htmlFor="email" className="block mb-2 font-medium">
                           Email Address *
                         </label>
@@ -175,7 +175,7 @@ export default function Contact() {
                         />
                       </div>
                       
-                      <div className="col-span-1">
+                      <div className="w-full">
                         <label htmlFor="phone" className="block mb-2 font-medium">
                           Phone Number
                         </label>
@@ -189,7 +189,7 @@ export default function Contact() {
                         />
                       </div>
                       
-                      <div className="col-span-1">
+                      <div className="w-full">
                         <label htmlFor="subject" className="block mb-2 font-medium">
                           Subject *
                         </label>
@@ -210,7 +210,7 @@ export default function Contact() {
                         </select>
                       </div>
                       
-                      <div className="col-span-2">
+                      <div className="w-full">
                         <label htmlFor="message" className="block mb-2 font-medium">
                           Your Message *
                         </label>
@@ -225,7 +225,7 @@ export default function Contact() {
                         ></textarea>
                       </div>
                       
-                      <div className="col-span-2">
+                      <div className="w-full">
                         <button
                           type="submit"
                           className="px-6 py-3 text-white transition-colors rounded-md bg-primary hover:bg-primary-light"

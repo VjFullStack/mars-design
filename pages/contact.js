@@ -155,7 +155,7 @@ export default function Contact() {
                           name="name"
                           value={formData.name}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-2 border rounded-md"
+                          className="w-full px-4 py-2 border rounded-md h-12 text-base"
                           required
                         />
                       </div>
@@ -170,7 +170,7 @@ export default function Contact() {
                           name="email"
                           value={formData.email}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-2 border rounded-md"
+                          className="w-full px-4 py-2 border rounded-md h-12 text-base"
                           required
                         />
                       </div>
@@ -185,7 +185,7 @@ export default function Contact() {
                           name="phone"
                           value={formData.phone}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-2 border rounded-md"
+                          className="w-full px-4 py-2 border rounded-md h-12 text-base"
                         />
                       </div>
                       
@@ -198,7 +198,7 @@ export default function Contact() {
                           name="subject"
                           value={formData.subject}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-2 border rounded-md"
+                          className="w-full px-4 py-2 border rounded-md h-12 text-base appearance-none"
                           required
                         >
                           <option value="">Select a subject</option>
@@ -220,7 +220,7 @@ export default function Contact() {
                           value={formData.message}
                           onChange={handleInputChange}
                           rows="5"
-                          className="w-full px-4 py-2 border rounded-md"
+                          className="w-full px-4 py-2 border rounded-md text-base"
                           required
                         ></textarea>
                       </div>
